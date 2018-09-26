@@ -6,8 +6,7 @@ body{
     grid-template-rows:  [settings] 50px [content] 1fr [footer] 100px;
     grid-template-columns: [header] 200px [content] 1fr;
     margin: 0;
-    height: 100%;
-    max-height: 100%;
+    height: 100vh;
 }
 
 header{
@@ -19,6 +18,20 @@ header{
         width: 100%;
         margin-top: 5px;
         margin-bottom: 5px;
+    }
+    .mattersList{
+        list-style: none;
+        padding-left: 15px;
+        li{
+            margin-bottom: 5px;
+        }
+        label{
+            border: 1px solid #ccc;
+            display: block;
+            height: 30px;
+            padding: 3px 8px;
+            border-radius: 15px;
+        }
     }
 }
 

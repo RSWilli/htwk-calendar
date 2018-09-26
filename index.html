@@ -1,4 +1,4 @@
-<!DCOTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>HTWK Calendar Parser</title>
@@ -8,22 +8,31 @@
     <body>
         <header>
             <h1>HTWK Stundenplan</h1>
-            <select id="year">
-                <option disabled selected>Semester wählen</option>
-            </select>
-            <select id="fakultaet">
-                <option disabled selected>Fakultät wählen</option>
-            </select>
-            <select id="studiengang">
-                <option disabled selected>Studiengang wählen</option>
-            </select>
-            <select id="seminargruppe">
-                <option disabled selected>Seminargruppe wählen</option>
-            </select>
-            <select id="week">
-                <option disabled selected>Woche wählen</option>
-            </select>
-            <button id="go">Go</button>
+            <div class="selectwrapper">
+                <select id="year">
+                    <option disabled selected>Semester wählen</option>
+                </select>
+                <select id="fakultaet">
+                    <option disabled selected>Fakultät wählen</option>
+                </select>
+                <select id="studiengang">
+                    <option disabled selected>Studiengang wählen</option>
+                </select>
+                <select id="seminargruppe">
+                    <option disabled selected>Seminargruppe wählen</option>
+                </select>
+                <select id="week">
+                    <option disabled selected>Woche wählen</option>
+                </select>
+                <button id="go">Go</button>
+            </div>
+            <ul class="mattersList">
+                <li><label><input type="checkbox"></label></li>
+                <li><label><input type="checkbox"></label></li>
+                <li><label><input type="checkbox"></label></li>
+                <li><label><input type="checkbox"></label></li>
+                <li><label><input type="checkbox"></label></li>
+            </ul>
         </header>
         <div class="settings"></div>
         <div class="calendar">

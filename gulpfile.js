@@ -31,7 +31,7 @@ gulp.task('sass', function () {
 
 
 gulp.task("default", ["compileTs", "sass"], function () {
-    gulp.watch("src/script/*.ts", ["compileTs"])
+    gulp.watch("src/script/**/*.ts", ["compileTs"])
     gulp.watch('src/sass/**/*.scss', ['sass']);
     
     
