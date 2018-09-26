@@ -1,0 +1,120 @@
+*{
+    box-sizing: border-box;
+}
+body{
+    display: grid;
+    grid-template-rows:  [settings] 50px [content] 1fr [footer] 100px;
+    grid-template-columns: [header] 200px [content] 1fr;
+    margin: 0;
+    height: 100%;
+    max-height: 100%;
+}
+
+header{
+    grid-row: settings / content-end;
+    grid-column: header;
+    border-right: 1px solid #ccc;
+    padding: 5px;
+    select {
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+footer {
+    grid-row: footer;
+    grid-column: content;
+}
+.settings{
+    grid-row: settings;
+}
+.calendar{
+    grid-row: content;
+    grid-column: content;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #ccc;
+    justify-items: save;
+
+    .dayNameBox{
+        position: sticky;
+        flex: 0 0 50px;
+        box-shadow: 0px 0px 5px #000;
+        display: flex;
+        flex-direction: row;
+        .dayNameContainer{
+            flex: 1 0 auto;
+            margin-left: 75px;
+            display: inline-flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .dayName{
+                border-left: 1px solid #ccc;
+                border-right: 1px solid #ccc;
+                flex: 0 0 (98%/7);
+                background: white;
+                padding: 14px 0;
+                text-align: center;
+                position: sticky;
+            }
+        }
+        .scrollBarSpace{
+            flex: 0 0 auto;
+            visibility: hidden;
+            overflow: scroll;
+        }
+    }
+    .weekWrapper {
+        flex: 0 0 1fr;
+        display: flex;
+        flex-direction: row;
+        overflow: scroll;
+        .time{
+            flex: 0 0 75px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .week{
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            height: (96*10px);
+
+            .day{
+                border: 1px solid #ccc;
+                background: #eee;
+                flex: 0 0 (98%/7);
+                display: grid;
+                grid-template-rows: repeat(96, 1fr);
+
+                .event{
+                    background: white;
+                    margin-left: 10px;
+                    margin-right: 3px;
+
+                    @for $hour from 0 through 23 { //1-indexed
+                        @for $quarter from 0 to 3 {
+                            $minute: $quarter*15;
+                            &.begin-#{$hour}-#{$minute}{
+                                grid-row-start: $hour*4 + $quarter + 1; //offset, because first is dayname
+                                &::before{
+                                    content: "#{$hour}:#{$minute}"
+                                }
+                            }
+                            &.end-#{$hour}-#{$minute}{
+                                grid-row-end: $hour*4 + $quarter + 1; //offset, because first is dayname
+                                &::after{
+                                    content: "#{$hour}:#{$minute}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

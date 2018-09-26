@@ -1,12 +1,64 @@
+<!DCOTYPE html>
 <html>
     <head>
         <title>HTWK Calendar Parser</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <header></header>
-        <div class="content">
-            
+        <header>
+            <h1>HTWK Stundenplan</h1>
+            <select id="year">
+                <option disabled selected>Semester wählen</option>
+            </select>
+            <select id="fakultaet">
+                <option disabled selected>Fakultät wählen</option>
+            </select>
+            <select id="studiengang">
+                <option disabled selected>Studiengang wählen</option>
+            </select>
+            <select id="seminargruppe">
+                <option disabled selected>Seminargruppe wählen</option>
+            </select>
+            <select id="week">
+                <option disabled selected>Woche wählen</option>
+            </select>
+            <button id="go">Go</button>
+        </header>
+        <div class="settings"></div>
+        <div class="calendar">
+            <div class="dayNameBox">
+                <div class="dayNameContainer">
+                    <div class="dayName">Montag</div>
+                    <div class="dayName">Dienstag</div>
+                    <div class="dayName">Mittwoch</div>
+                    <div class="dayName">Donnerstag</div>
+                    <div class="dayName">Freitag</div>
+                    <div class="dayName">Samstag</div>
+                    <div class="dayName">Sonntag</div>
+                </div>
+                <div class="scrollBarSpace"></div>
+            </div>
+            <div class="weekWrapper">
+                <div class="time">
+
+                </div>
+                <div class="week">
+                    <div class="day">
+                        <div class="event begin-8-15 end-10-0">Test</div>
+                        <div class="event begin-7-0 end-12-0">Test</div>
+                    </div>
+                    <div class="day"></div>
+                    <div class="day"></div>
+                    <div class="day"></div>
+                    <div class="day"></div>
+                    <div class="day"></div>
+                    <div class="day"></div>
+                </div>
+            </div>
         </div>
-        <script src="dist/main.js"></script>
+
+        <footer></footer>
+        <script src="script/main.js" type="module"></script>
     </body>
 </html>
