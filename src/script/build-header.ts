@@ -1,5 +1,6 @@
 import Parser from "./parser"
 import { fakultaetSelect, seminargruppeSelect, studiengangSelect, weekSelect, yearsSelect } from "./selects";
+import { DateFactory } from "./calendar/dateFactory";
 
 declare global {
     interface Window {
@@ -91,6 +92,7 @@ function createStudiengangEventListener() {
 
 function createYearEventListener(){
     yearsSelect.addEventListener("change", function() {
+
         const weekOptions = [...weekSelect.querySelectorAll("option")]
         weekOptions.shift()
 

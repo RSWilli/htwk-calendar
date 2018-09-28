@@ -22,7 +22,8 @@ async function main() {
             
             const body = planDoc.documentElement.querySelector("body")!!
 
-            document.querySelector("footer")!!.innerHTML = `<pre>${planMarkup.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`
+            //output Markup for Debug purpose
+            //document.querySelector("footer")!!.innerHTML = `<pre>${planMarkup.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>`
 
 
             console.log(body)
