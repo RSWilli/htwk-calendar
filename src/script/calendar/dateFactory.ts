@@ -78,4 +78,11 @@ export class DateFactory {
             end: endDate
         }
     }
+
+    /**
+     * getAllWeeks
+     */
+    public getAllWeeks() : Map<string, Date>{
+        return this.mapWeekNumberToDate
+    }
 }

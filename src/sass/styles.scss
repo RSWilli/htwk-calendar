@@ -13,7 +13,10 @@ header{
     grid-row: settings / content-end;
     grid-column: header;
     border-right: 1px solid #ccc;
+    background: white;
     padding: 5px;
+    z-index: 1;
+    position: relative;
     select {
         width: 100%;
         margin-top: 5px;
@@ -38,9 +41,32 @@ header{
 footer {
     grid-row: footer;
     grid-column: content;
+    z-index: 1;
+    position: relative;
 }
 .settings{
     grid-row: settings;
+    display: flex;
+    z-index: 1;
+    position: relative;
+    button{
+        flex: 0 0 auto;
+        margin: 5px;
+        padding: 0px 15px;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        &:focus, &:active{
+            outline: none;
+        }
+    }
+    div{
+        flex: 1 0 auto;
+        padding: 14px;
+        text-align: center;
+        span{
+            margin: 0px 10px;
+        }
+    }
 }
 .calendar{
     grid-row: content;
@@ -50,9 +76,24 @@ footer {
     flex-direction: column;
     border-top: 1px solid #ccc;
     justify-items: save;
+    z-index: 0;
+    position: relative;
+    display: none;
+    &.current, &.prev, &.next{
+        display: block;
+    }
+
+    &.current{
+        transform: translateX(0%);
+    }
+    &.prev{
+        transform: translateX(-100%);
+    }
+    &.next{
+        transform: translateX(100%);
+    }
 
     .dayNameBox{
-        position: sticky;
         flex: 0 0 75px;
         box-shadow: 0px 0px 5px #000;
         display: flex;
@@ -83,10 +124,10 @@ footer {
         }
     }
     .weekWrapper {
-        flex: 0 0 1fr;
         display: flex;
         flex-direction: row;
         overflow: scroll;
+        position: relative;
         .time{
             flex: 0 0 75px;
             display: flex;
@@ -94,7 +135,7 @@ footer {
             justify-content: space-between;
         }
         .week{
-            flex: 1 0 auto;
+            flex: 0 0 auto;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
@@ -112,18 +153,12 @@ footer {
                     background: white;
 
                     @for $hour from 0 through 23 {
-                        @each $quarter, $minute in (0, "00"), (1, "15"), (2, "30"), (3, "45") {
+                        @each $quarter, $minute in (0, "0"), (1, "15"), (2, "30"), (3, "45") {
                             &.begin-#{$hour}-#{$minute}{
                                 grid-row-start: $hour*4 + $quarter + 1; //offset, because 1-indexed
-                                &::before{
-                                    content: "#{$hour}:#{$minute}"
-                                }
                             }
                             &.end-#{$hour}-#{$minute}{
                                 grid-row-end: $hour*4 + $quarter + 1; //offset, because 1-indexed
-                                &::after{
-                                    content: "#{$hour}:#{$minute}"
-                                }
                             }
                         }
                     }

@@ -28,7 +28,9 @@ async function main() {
 
             console.log(body)
 
-            new Calendar(planDoc)
+            const calendar = new Calendar(planDoc)
+
+            const calendarWeeks = calendar.getMarkup()
 
         }
 

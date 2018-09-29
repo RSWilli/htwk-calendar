@@ -2,6 +2,7 @@ import { Matter } from "./matter";
 import { DAY, WEEK } from "./days"
 import { DateFactory } from "./dateFactory";
 import { Schedule } from "./schedule";
+import { CalendarBuilder } from "./calendar-builder";
 
 export class Calendar {
 
@@ -116,5 +117,33 @@ export class Calendar {
         weekList.forEach(week => schedules.push(this.dateFactory.getDate(week, day, startTimeArray[0],startTimeArray[1], endTimeArray[0], endTimeArray[1])))
 
         return schedules
+    }
+    /**
+     * getMarkup return the complete HTML Markup for the parsed calendar
+     */
+    public getMarkup() : Array<Element>{
+        const weekMap = this.dateFactory.getAllWeeks()
+
+        const calendarArray:Array<Element> = []
+
+        weekMap.forEach((startDate, weekNumber) => {
+            let currentDate = new Date(startDate.getTime())
+            const calendarWeek = new CalendarBuilder()
+            WEEK.forEach(weekDay => {
+
+                const eventList = this.mapDateToMatters.get(currentDate.getTime()) || []
+                
+                eventList.forEach(matter => {
+                    calendarWeek.addEvent(weekDay, matter)
+                })
+
+                // next Day
+                currentDate.setDate(currentDate.getDate() + 1)
+            })
+
+            calendarArray.push(calendarWeek.build())
+        })
+
+        return calendarArray
     }
 }

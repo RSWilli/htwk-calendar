@@ -35,4 +35,29 @@ export class Matter {
     public getSchedules() : Array<Schedule>{
         return this.schedules
     }
+
+    /**
+     * getStartTime
+     */
+    public getStartTime() : string {
+        const time = this.schedules[0].start
+
+        return `${time.getHours()}-${time.getMinutes()}`
+    }
+
+    /**
+     * getEndTime
+     */
+    public getEndTime() : string{
+        const time = this.schedules[0].end
+
+        return `${time.getHours()}-${time.getMinutes()}`
+    }
+
+    /**
+     * getName
+     */
+    public getName() : string{
+        return this.name
+    }
 }

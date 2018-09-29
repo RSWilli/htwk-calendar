@@ -7,13 +7,9 @@ import { Matter } from "./matter";
 export class CalendarBuilder {
 
     private rootElement:Element
-    private weekDays:Map<DAY, Element>
+    private weekDays:Map<DAY, Element> = new Map()
 
     constructor() {
-        this.initMarkup()
-    }
-
-    private initMarkup() {
         this.rootElement = CalendarBuilder.createElement("div", ["calendar"])
         const dayNameBox = CalendarBuilder.createElement("div", ["dayNameBox"])
         this.rootElement.appendChild(dayNameBox)
@@ -24,7 +20,7 @@ export class CalendarBuilder {
         dayNameBox.appendChild(CalendarBuilder.createElement("div", ["scrollBarSpace"]))
         
         WEEK.forEach(day => {
-            dayNameContainer.appendChild(CalendarBuilder.createElement("div", ["dayName"], day))
+            dayNameContainer.appendChild(CalendarBuilder.createElement("div", ["dayName"], `${day}<h3>31.10.2018</h3>`))
         })
 
         const weekWrapper = CalendarBuilder.createElement("div", ["weekWrapper"])
@@ -67,6 +63,15 @@ export class CalendarBuilder {
      * addEvent
      */
     public addEvent(weekDay:DAY, event:Matter) {
-        
+        const start = event.getStartTime()
+        const end = event.getEndTime()
+
+        const eventEl = CalendarBuilder.createElement("div", ["event", `begin-${start}`, `end-${end}`], event.getName())
+
+        this.weekDays.get(weekDay).appendChild(eventEl)
+    }
+
+    public build() : Element{
+        return this.rootElement
     }
 }
