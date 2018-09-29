@@ -121,14 +121,14 @@ export class Calendar {
     /**
      * getMarkup return the complete HTML Markup for the parsed calendar
      */
-    public getMarkup() : Array<Element>{
+    public getMarkup() : Array<HTMLElement>{
         const weekMap = this.dateFactory.getAllWeeks()
 
-        const calendarArray:Array<Element> = []
+        const calendarArray:Array<HTMLElement> = []
 
         weekMap.forEach((startDate, weekNumber) => {
             let currentDate = new Date(startDate.getTime())
-            const calendarWeek = new CalendarBuilder()
+            const calendarWeek = new CalendarBuilder(currentDate, weekNumber)
             WEEK.forEach(weekDay => {
 
                 const eventList = this.mapDateToMatters.get(currentDate.getTime()) || []

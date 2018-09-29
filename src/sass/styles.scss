@@ -1,12 +1,17 @@
 *{
     box-sizing: border-box;
 }
+.hidden{
+    visibility: hidden;
+}
+
 body{
     display: grid;
     grid-template-rows:  [settings] 50px [content] 1fr [footer] 100px;
     grid-template-columns: [header] 200px [content] 1fr;
     margin: 0;
     height: 100vh;
+    overflow: hidden;
 }
 
 header{
@@ -72,15 +77,15 @@ footer {
     grid-row: content;
     grid-column: content;
     overflow: hidden;
-    display: flex;
     flex-direction: column;
     border-top: 1px solid #ccc;
     justify-items: save;
     z-index: 0;
     position: relative;
     display: none;
+    transition: transform linear 0.75s;
     &.current, &.prev, &.next{
-        display: block;
+        display: flex;
     }
 
     &.current{
@@ -98,6 +103,8 @@ footer {
         box-shadow: 0px 0px 5px #000;
         display: flex;
         flex-direction: row;
+        position: relative;
+        z-index: 1;
         .dayNameContainer{
             flex: 1 0 auto;
             margin-left: 75px;
@@ -123,42 +130,61 @@ footer {
             overflow: scroll;
         }
     }
-    .weekWrapper {
-        display: flex;
-        flex-direction: row;
+    .scrollWrapper{
+        flex: 1 1 auto;
         overflow: scroll;
         position: relative;
-        .time{
-            flex: 0 0 75px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .week{
-            flex: 0 0 auto;
+        z-index: 0;
+
+
+        .weekWrapper {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
-            height: (96*10px);
-
-            .day{
-                border: 1px solid #ccc;
-                background: #eee;
-                flex: 0 0 (98%/7);
-                display: grid;
-                grid-template-rows: repeat(96, 1fr);
+            .time{
+                flex: 0 0 75px;
+                display: flex;
+                flex-direction: column;
                 padding: 5px;
+                span{
+                    flex: 1 1 auto;
+                }
+            }
+            .week{
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
 
-                .event{
-                    background: white;
+                .day{
+                    border: 1px solid #ccc;
+                    background: #eee;
+                    flex: 0 0 (98%/7);
+                    display: grid;
+                    grid-auto-rows: 1fr;
+                    padding: 5px;
 
-                    @for $hour from 0 through 23 {
-                        @each $quarter, $minute in (0, "0"), (1, "15"), (2, "30"), (3, "45") {
-                            &.begin-#{$hour}-#{$minute}{
-                                grid-row-start: $hour*4 + $quarter + 1; //offset, because 1-indexed
+                    .event{
+                        background: white;
+                        word-wrap: break-word;
+                        word-break: break-all;
+
+                        @for $hour from 0 through 23 {
+                            @each $quarter, $minute in (0, "0"), (1, "15"), (2, "30"), (3, "45") {
+                                &.begin-#{$hour}-#{$minute}{
+                                    grid-row-start: $hour*4 + $quarter + 1; //offset, because 1-indexed
+                                }
                             }
-                            &.end-#{$hour}-#{$minute}{
-                                grid-row-end: $hour*4 + $quarter + 1; //offset, because 1-indexed
+                        }
+
+                        &.end-0-0{
+                            grid-row-end: 24*4 + 1; //offset, because 1-indexed
+                        }
+
+                        @for $hour from 1 through 23 {
+                            @each $quarter, $minute in (0, "0"), (1, "15"), (2, "30"), (3, "45") {
+                                &.end-#{$hour}-#{$minute}{
+                                    grid-row-end: $hour*4 + $quarter + 1; //offset, because 1-indexed
+                                }
                             }
                         }
                     }

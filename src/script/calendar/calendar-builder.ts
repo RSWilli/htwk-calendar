@@ -9,7 +9,7 @@ export class CalendarBuilder {
     private rootElement:Element
     private weekDays:Map<DAY, Element> = new Map()
 
-    constructor() {
+    constructor(startDate:Date, weekNumber:string) {
         this.rootElement = CalendarBuilder.createElement("div", ["calendar"])
         const dayNameBox = CalendarBuilder.createElement("div", ["dayNameBox"])
         this.rootElement.appendChild(dayNameBox)
@@ -19,12 +19,30 @@ export class CalendarBuilder {
         dayNameBox.appendChild(dayNameContainer)
         dayNameBox.appendChild(CalendarBuilder.createElement("div", ["scrollBarSpace"]))
         
+        const currentDate = new Date(startDate.getTime())
         WEEK.forEach(day => {
-            dayNameContainer.appendChild(CalendarBuilder.createElement("div", ["dayName"], `${day}<h3>31.10.2018</h3>`))
+            const dateString = currentDate.getDate() + "." + currentDate.getMonth() + "." + currentDate.getFullYear()
+            dayNameContainer.appendChild(CalendarBuilder.createElement("div", ["dayName"], `${day}<h3>${dateString}</h3>`))
+
+            currentDate.setDate(currentDate.getDate() + 1)
         })
 
+        const startDateString = startDate.getDate() + "." + startDate.getMonth() + "." + startDate.getFullYear()
+        const endDateString = currentDate.getDate() + "." + currentDate.getMonth() + "." + currentDate.getFullYear()
+
+        /**
+         * set the Attributes on the Calendar
+         */
+        this.rootElement.id = startDate.getTime().toString()
+        this.rootElement.setAttribute("data-start-date", startDateString)
+        this.rootElement.setAttribute("data-end-date", endDateString)
+        this.rootElement.setAttribute("data-week-number", weekNumber)
+
+
         const weekWrapper = CalendarBuilder.createElement("div", ["weekWrapper"])
-        this.rootElement.appendChild(weekWrapper)
+        const scrollWrapper = CalendarBuilder.createElement("div", ["scrollWrapper"])
+        this.rootElement.appendChild(scrollWrapper)
+        scrollWrapper.appendChild(weekWrapper)
 
         const times = CalendarBuilder.createElement("div", ["time"])
         weekWrapper.appendChild(times)
@@ -33,6 +51,7 @@ export class CalendarBuilder {
                 times.appendChild(CalendarBuilder.createElement("span",[], `${hour}:${minute}`))
             })
         }
+        times.appendChild(CalendarBuilder.createElement("span",[], "0:00"))
 
         const week = CalendarBuilder.createElement("div", ["week"])
         weekWrapper.appendChild(week)
@@ -43,6 +62,8 @@ export class CalendarBuilder {
         WEEK.forEach(day => {
             const dayEl = CalendarBuilder.createElement("div", ["day"])
             week.appendChild(dayEl)
+
+            dayEl.appendChild(CalendarBuilder.createElement("div", ["event", "hidden", "begin-0-0", "end-0-0"]))
 
             this.weekDays.set(day, dayEl)
         })
@@ -68,10 +89,12 @@ export class CalendarBuilder {
 
         const eventEl = CalendarBuilder.createElement("div", ["event", `begin-${start}`, `end-${end}`], event.getName())
 
+        eventEl.setAttribute("data-name", event.getName()) 
+
         this.weekDays.get(weekDay).appendChild(eventEl)
     }
 
-    public build() : Element{
-        return this.rootElement
+    public build() : HTMLElement{
+        return this.rootElement as HTMLElement
     }
 }

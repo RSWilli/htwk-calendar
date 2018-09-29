@@ -71,7 +71,7 @@ function createFakultaetSelect(){
 function createFakultaetEventListener() {
     fakultaetSelect.addEventListener("change", function () {
         const value = fakultaetSelect.value
-        const fakultaet = window.seminargruppenDoc.querySelector(`#${value}`)!!
+        const fakultaet = window.seminargruppenDoc.querySelector(`[id="${value}"]`)!!
 
         const studiengaenge = fakultaet.querySelectorAll("studiengang")
 
@@ -82,7 +82,7 @@ function createFakultaetEventListener() {
 function createStudiengangEventListener() {
     studiengangSelect.addEventListener("change", function () {
         const value = studiengangSelect.value
-        const studiengang = window.seminargruppenDoc.querySelector(`#${value}`)!!
+        const studiengang = window.seminargruppenDoc.querySelector(`[id="${value}"]`)!!
 
         const seminargruppen = studiengang.querySelectorAll("semgrp")
 
@@ -100,7 +100,7 @@ function createYearEventListener(){
 
         const value = yearsSelect.value
 
-        const period = window.yearDoc.querySelector(`period#${value}`)!!
+        const period = window.yearDoc.querySelector(`period[id="${value}"]`)!!
 
         const weeks = period.querySelectorAll("woche")
 

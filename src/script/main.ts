@@ -32,9 +32,131 @@ async function main() {
 
             const calendarWeeks = calendar.getMarkup()
 
+            if (calendarWeeks[0]) {
+                calendarWeeks[0].classList.add("current")
+            }
+            if (calendarWeeks[1]) {
+                calendarWeeks[1].classList.add("next")
+            }
+
+            const weekRange = document.getElementById("weekRange")
+
+            calendarWeeks.forEach(week => {
+                document.body.appendChild(week)
+                const weekStart = week.getAttribute("data-start-date")
+                const weekEnd = week.getAttribute("data-end-date")
+                const weeknumber = week.getAttribute("data-week-number")
+                const id = week.id
+                const option = document.createElement("option")
+                option.setAttribute("value", id)
+                option.innerHTML = weeknumber + ": " + weekStart + " - " + weekEnd
+
+                weekRange.appendChild(option)
+            })
+
+            document.querySelector(".settings").classList.remove("hidden")
+
         }
 
     })
+
+    /**
+     * Event Listener for the Carousel
+     */
+    document.getElementById("prev").addEventListener("click", () => {
+        const prev = document.querySelector(".calendar.prev")
+        const current = document.querySelector(".calendar.current")
+        const next = document.querySelector(".calendar.next")
+
+        if(!prev){
+            return
+        }
+
+        const newPrev = prev.previousElementSibling
+
+        if(newPrev && newPrev.matches(".calendar")){
+            newPrev.classList.add("prev")
+        }
+        prev.classList.remove("prev")
+        prev.classList.add("current")
+
+        current.classList.remove("current")
+        current.classList.add("next")
+
+        if(next){
+            next.classList.remove("next")
+        }
+
+        const weekRange = document.getElementById("weekRange") as HTMLSelectElement
+
+        weekRange.value = prev.id
+
+    })
+
+    /**
+     * Event Listener for the Carousel
+     */
+    document.getElementById("next").addEventListener("click", () => {
+        const prev = document.querySelector(".calendar.prev")
+        const current = document.querySelector(".calendar.current")
+        const next = document.querySelector(".calendar.next")
+
+        if(!next){
+            return
+        }
+
+        const newNext = next.nextElementSibling
+
+        if(newNext && newNext.matches(".calendar")){
+            newNext.classList.add("next")
+        }
+        next.classList.remove("next")
+        next.classList.add("current")
+
+        current.classList.remove("current")
+        current.classList.add("prev")
+
+        if(prev){
+            prev.classList.remove("prev")
+        }
+
+        const weekRange = document.getElementById("weekRange") as HTMLSelectElement
+
+        weekRange.value = next.id
+
+    })
+
+    document.getElementById("weekRange").addEventListener("change", () => {
+        const weekRange = document.getElementById("weekRange") as HTMLSelectElement
+        const prev = document.querySelector(".calendar.prev")
+        const current = document.querySelector(".calendar.current")
+        const next = document.querySelector(".calendar.next")
+
+        const newCurrent = document.querySelector(`[id="${weekRange.value}"]`)
+        const newPrev = newCurrent.previousElementSibling
+        const newNext = newCurrent.nextElementSibling
+
+        if(prev){
+            prev.classList.remove("prev")
+        }
+
+        if(next){
+            next.classList.remove("next")
+        }
+
+        current.classList.remove("current")
+
+        newCurrent.classList.add("current")
+
+        if(newPrev && newPrev.matches(".calendar")){
+            newPrev.classList.add("prev")
+        }
+
+        if(newNext && newNext.matches(".calendar")){
+            newNext.classList.add("next")
+        }
+    })
+
 }
 
 main()

@@ -34,14 +34,15 @@
                 <li><label><input type="checkbox"></label></li>
             </ul>
         </header>
-        <div class="settings">
-            <button>&lt;</button>
+        <div class="settings hidden">
+            <button id="prev">&lt;</button>
             <div>
-                20.09.2018 - 27.09.2018
+                <select id="weekRange">
+                </select>
             </div>
-            <button>&gt;</button>
+            <button id="next">&gt;</button>
         </div>
-        <div class="calendar current">
+        <!-- <div class="calendar current">
             <div class="dayNameBox">
                 <div class="dayNameContainer">
                     <div class="dayName">
@@ -75,26 +76,28 @@
                 </div>
                 <div class="scrollBarSpace"></div>
             </div>
-            <div class="weekWrapper">
-                <div class="time">
-
-                </div>
-                <div class="week">
-                    <div class="day">
-                        <div class="event begin-8-15 end-10-00">Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText </div>
-                        <div class="event begin-7-00 end-12-00">Test</div>
+            <div class="scrollWrapper">
+                <div class="weekWrapper">
+                    <div class="time">
+                        <span>0:00</span><span>0:15</span><span>0:30</span><span>0:45</span><span>1:00</span><span>1:15</span><span>1:30</span><span>1:45</span><span>2:00</span><span>2:15</span><span>2:30</span><span>2:45</span><span>3:00</span><span>3:15</span><span>3:30</span><span>3:45</span><span>4:00</span><span>4:15</span><span>4:30</span><span>4:45</span><span>5:00</span><span>5:15</span><span>5:30</span><span>5:45</span><span>6:00</span><span>6:15</span><span>6:30</span><span>6:45</span><span>7:00</span><span>7:15</span><span>7:30</span><span>7:45</span><span>8:00</span><span>8:15</span><span>8:30</span><span>8:45</span><span>9:00</span><span>9:15</span><span>9:30</span><span>9:45</span><span>10:00</span><span>10:15</span><span>10:30</span><span>10:45</span><span>11:00</span><span>11:15</span><span>11:30</span><span>11:45</span><span>12:00</span><span>12:15</span><span>12:30</span><span>12:45</span><span>13:00</span><span>13:15</span><span>13:30</span><span>13:45</span><span>14:00</span><span>14:15</span><span>14:30</span><span>14:45</span><span>15:00</span><span>15:15</span><span>15:30</span><span>15:45</span><span>16:00</span><span>16:15</span><span>16:30</span><span>16:45</span><span>17:00</span><span>17:15</span><span>17:30</span><span>17:45</span><span>18:00</span><span>18:15</span><span>18:30</span><span>18:45</span><span>19:00</span><span>19:15</span><span>19:30</span><span>19:45</span><span>20:00</span><span>20:15</span><span>20:30</span><span>20:45</span><span>21:00</span><span>21:15</span><span>21:30</span><span>21:45</span><span>22:00</span><span>22:15</span><span>22:30</span><span>22:45</span><span>23:00</span><span>23:15</span><span>23:30</span><span>23:45</span><span>0:00</span>
                     </div>
-                    <div class="day"></div>
-                    <div class="day"></div>
-                    <div class="day"></div>
-                    <div class="day"></div>
-                    <div class="day"></div>
-                    <div class="day"></div>
+                    <div class="week">
+                        <div class="day">
+                            <div class="event begin-8-15 end-10-00">Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText Test langerText </div>
+                            <div class="event begin-7-00 end-12-00">Test</div>
+                        </div>
+                        <div class="day"></div>
+                        <div class="day"></div>
+                        <div class="day"></div>
+                        <div class="day"></div>
+                        <div class="day"></div>
+                        <div class="day"></div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <footer></footer>
-        <script src="script/main.js" type="module"></script>
+        <script src="script/main.js" async defer></script>
     </body>
 </html>
