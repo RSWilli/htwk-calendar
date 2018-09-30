@@ -32,6 +32,8 @@ async function main() {
 
             const calendarWeeks = calendar.getMarkup()
 
+            const matters = calendar.getMatters()
+
             if (calendarWeeks[0]) {
                 calendarWeeks[0].classList.add("current")
             }
@@ -55,6 +57,36 @@ async function main() {
             })
 
             document.querySelector(".settings").classList.remove("hidden")
+
+            const matterList = document.querySelector(".mattersList")
+
+            matters.forEach((matters, name) => {
+                const li = document.createElement("li")
+                const label = document.createElement("label")
+                const checkbox = document.createElement("input")
+
+                checkbox.setAttribute("type", "checkbox")
+                checkbox.setAttribute("checked", "checked")
+                
+                
+                checkbox.addEventListener("change", () => {
+                    console.log("changed")
+                    matters.forEach(matter => {
+                        const name = matter.getId()
+                        
+                        const matterEls = document.querySelectorAll(`.event[data-id="${name}"]`)
+                        
+                        matterEls.forEach(matterEl => {
+                            matterEl.classList.toggle("hidden")
+                        })
+                    })
+                })
+                
+                label.appendChild(checkbox)
+                label.appendChild(document.createTextNode(name))
+                li.appendChild(label)
+                matterList.appendChild(li)
+            })
 
         }
 

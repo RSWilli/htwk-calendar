@@ -21,14 +21,16 @@ export class CalendarBuilder {
         
         const currentDate = new Date(startDate.getTime())
         WEEK.forEach(day => {
-            const dateString = currentDate.getDate() + "." + currentDate.getMonth() + "." + currentDate.getFullYear()
+            const dateString = currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear()
             dayNameContainer.appendChild(CalendarBuilder.createElement("div", ["dayName"], `${day}<h3>${dateString}</h3>`))
 
             currentDate.setDate(currentDate.getDate() + 1)
         })
 
-        const startDateString = startDate.getDate() + "." + startDate.getMonth() + "." + startDate.getFullYear()
-        const endDateString = currentDate.getDate() + "." + currentDate.getMonth() + "." + currentDate.getFullYear()
+        currentDate.setDate(currentDate.getDate() - 1)
+
+        const startDateString = startDate.getDate() + "." + (startDate.getMonth() + 1) + "." + startDate.getFullYear()
+        const endDateString = currentDate.getDate() + "." + (currentDate.getMonth() + 1) + "." + currentDate.getFullYear()
 
         /**
          * set the Attributes on the Calendar
@@ -87,9 +89,9 @@ export class CalendarBuilder {
         const start = event.getStartTime()
         const end = event.getEndTime()
 
-        const eventEl = CalendarBuilder.createElement("div", ["event", `begin-${start}`, `end-${end}`], event.getName())
+        const eventEl = CalendarBuilder.createElement("div", ["event", `begin-${start}`, `end-${end}`, `color-${event.getColor()}`], event.getName())
 
-        eventEl.setAttribute("data-name", event.getName()) 
+        eventEl.setAttribute("data-id", event.getId()) 
 
         this.weekDays.get(weekDay).appendChild(eventEl)
     }

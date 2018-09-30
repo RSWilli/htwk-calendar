@@ -39,6 +39,7 @@ header{
             height: 30px;
             padding: 3px 8px;
             border-radius: 15px;
+            overflow: hidden;
         }
     }
 }
@@ -191,5 +192,10 @@ footer {
                 }
             }
         }
+    }
+}
+@for $colorValue from 0 to 360 {
+    .color-#{$colorValue}{
+        border-left: 3px solid hsl($colorValue, 100, 50)
     }
 }

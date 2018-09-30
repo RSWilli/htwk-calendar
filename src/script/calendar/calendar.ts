@@ -24,6 +24,18 @@ export class Calendar {
             this.parseTable(node as HTMLTableElement, WEEK[index])
         })
         console.log(this)
+
+        const neededColors = this.mapNameToMatters.size
+
+        //300, because 360 would mean two reds
+        const colorDiff = Math.round(300/neededColors)
+
+        let currentColor = 0
+        this.mapNameToMatters.forEach(matterArray => {
+            matterArray.forEach(matter => matter.setColor(currentColor))
+
+            currentColor += colorDiff
+        })
     }
 
     private parseTable(table:HTMLTableElement, day:DAY) {
@@ -145,5 +157,12 @@ export class Calendar {
         })
 
         return calendarArray
+    }
+
+    /**
+     * getMatters
+     */
+    public getMatters() {
+        return this.mapNameToMatters
     }
 }

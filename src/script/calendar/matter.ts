@@ -14,6 +14,8 @@ export class Matter {
 
     private note:string
 
+    private color:number
+
     constructor(schedules:Array<Schedule>, name:string, kind:string, prof:string, room:string, note:string) {
 
         this.schedules = schedules
@@ -59,5 +61,34 @@ export class Matter {
      */
     public getName() : string{
         return this.name
+    }
+
+    /**
+     * setColors
+     */
+    public setColor(color:number) {
+        this.color = color
+    }
+
+    /**
+     * getColor
+     */
+    public getColor() : number{
+        return this.color
+    }
+
+    /**
+     * getId
+     */
+    public getId() : string{
+        let id = this.name
+
+        this.schedules.forEach(schedule =>{
+            id += schedule.day.getTime()
+            id += schedule.start.getTime()
+            id += schedule.end.getTime()
+        })
+
+        return id
     }
 }
