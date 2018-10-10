@@ -2,7 +2,7 @@ const URLS = {
     studienjahr: "https://stundenplan.htwk-leipzig.de/stundenplan/studienjahr.xml",
     seminargruppen: "https://stundenplan.htwk-leipzig.de/stundenplan/semgrp/semgrp_$SEMESTER$.xml",
 
-    stundenplan: 'https://stundenplan.htwk-leipzig.de/$SEMESTER$/Berichte/Text-Listen;Studenten-Sets;name;$SEMINARGRUPPE$?template=sws_semgrp_js&weeks=$WEEKS$&days=&periods=3-64&Width=0&Height=0'
+    stundenplan: 'https://stundenplan.htwk-leipzig.de/$SEMESTER$/Berichte/Text-Listen;Studenten-Sets;name;$SEMINARGRUPPE$?template=UNBuchen&weeks=$WEEKS$&days=&periods=3-64&Width=0&Height=0'
 
 }
 

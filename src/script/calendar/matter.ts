@@ -1,10 +1,9 @@
 import { Calendar } from "./calendar";
-import { Schedule } from "./schedule";
+import { DAY } from "./days";
 
 export class Matter {
-    private schedules:Array<Schedule>
 
-    private kind:string
+    private day:DAY
 
     private name:string
 
@@ -16,44 +15,45 @@ export class Matter {
 
     private color:number
 
-    constructor(schedules:Array<Schedule>, name:string, kind:string, prof:string, room:string, note:string) {
+    private id:string
 
-        this.schedules = schedules
+    private start: string;
+    private end: string;
+
+    constructor(day:DAY, room:string, start:string, end:string, note:string, name:string, prof:string, systemName:string) {
+
+        this.id = systemName + day + start + end
 
         this.room = room
+
+        this.start = start
+        this.end = end
 
         this.prof = prof
 
         this.note = note
 
-        this.kind = kind
+        this.day = day
 
         this.name = name
     }
 
-    /**
-     * getSchedules
-     */
-    public getSchedules() : Array<Schedule>{
-        return this.schedules
+    public getDay(): DAY {
+        return this.day
     }
 
     /**
      * getStartTime
      */
     public getStartTime() : string {
-        const time = this.schedules[0].start
-
-        return `${time.getHours()}-${time.getMinutes()}`
+        return this.start
     }
 
     /**
      * getEndTime
      */
     public getEndTime() : string{
-        const time = this.schedules[0].end
-
-        return `${time.getHours()}-${time.getMinutes()}`
+        return this.end
     }
 
     /**
@@ -81,14 +81,6 @@ export class Matter {
      * getId
      */
     public getId() : string{
-        let id = this.name
-
-        this.schedules.forEach(schedule =>{
-            id += schedule.day.getTime()
-            id += schedule.start.getTime()
-            id += schedule.end.getTime()
-        })
-
-        return id
+        return this.id
     }
 }

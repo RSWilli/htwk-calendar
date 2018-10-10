@@ -1,7 +1,6 @@
 import { weekSelect, yearsSelect } from "../selects";
 import { start } from "repl";
 import { DAY } from "./days";
-import { Schedule } from "./schedule";
 
 /**
  * Class to generate Dates from Week Numbers and Days
@@ -31,7 +30,7 @@ export class DateFactory {
             const weekNumber = weekEl.getAttribute("id")
             const nameAttr = weekEl.getAttribute("name")
 
-            const dateRangeMatch = nameAttr.match(/:*Planungswoche (\d\d)\.(\d\d)\. - (\d\d)\.(\d\d)\.(\d\d\d\d)/)
+            const dateRangeMatch = nameAttr.match(/.*Planungswoche (\d\d)\.(\d\d)\. - (\d\d)\.(\d\d)\.(\d\d\d\d)/)
 
             //guess the start Year and correct it later
             let startDate = new Date(startYear + "-" + dateRangeMatch[2] + "-" + dateRangeMatch[1])
@@ -48,7 +47,7 @@ export class DateFactory {
         })
     }
 
-    public getDate(week:string, day:DAY, startHour:number, startMinute:number, endHour:number, endMinute:number) : Schedule {
+    public getDate(week:string, day:DAY) : Date {
         let offset:number
         switch (day) {
             case DAY.MONDAY: offset = 0 ;break;
@@ -64,19 +63,38 @@ export class DateFactory {
         const dayDate = new Date(weekstart.getTime())
         dayDate.setDate(weekstart.getDate() + offset)
 
-        const startDate = new Date(dayDate.getTime())
-        startDate.setHours(startHour)
-        startDate.setMinutes(startMinute)
+        return dayDate
+    }
 
-        const endDate = new Date(dayDate.getTime())
-        endDate.setHours(endHour)
-        endDate.setMinutes(endMinute)
+    /**
+     * Function to parse a Weekstring format to it's according Week numbers
+     * @param weekString - a Week String Format, e.g.: "1", "1,2", "1-4", "1-5, 10-20" (Note the EXACT Format e.g. the whitespace)
+     */
+    static parseWeekString(weekString:string) : Array<string> {
+        /**
+         * split enumerations
+         */
+        const weekSequences = weekString.split(", ")
+        const weekList:Array<string> = []
 
-        return {
-            day: dayDate,
-            start: startDate,
-            end: endDate
-        }
+        weekSequences.forEach(weekSequence =>{
+            const interval = weekSequence.split("-")
+
+            if(interval.length == 1){
+                // single week, like 42
+                weekList.push(interval[0])
+            }else{
+                // week sequence, like 50-54
+                const start = parseInt(interval[0])
+                const end = parseInt(interval[1])
+
+                for(let i = start; i <= end; i++){
+                    weekList.push(i.toString())
+                }
+            }
+        })
+
+        return weekList
     }
 
     /**
@@ -84,5 +102,14 @@ export class DateFactory {
      */
     public getAllWeeks() : Map<string, Date>{
         return this.mapWeekNumberToDate
+    }
+
+    /**
+     * getWeekIterator
+     */
+    public* getWeekIterator() : IterableIterator<Date> {
+        for (const date of this.mapWeekNumberToDate) {
+            yield date[1]
+        }
     }
 }

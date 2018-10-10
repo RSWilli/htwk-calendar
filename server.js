@@ -22,10 +22,10 @@ app.use(function(err, req, res, next) {
 });
 
 app.get("/", (req, res)=>{
-    res.sendFile(`${process.cwd()}/index.html`)
+    res.sendFile(`${process.cwd()}/public/index.html`)
 })
 
-app.use("/", express.static("dist"))
+app.use("/", express.static("public"))
 
 app.use("/", (req, res, next) => {
     const e = new Error("Not Found")

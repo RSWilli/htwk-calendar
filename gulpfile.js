@@ -16,28 +16,35 @@ gulp.task("compileTs", async function () {
     });
 
     await bundle.write({
-        file: './dist/script/main.js',
+        file: './public/script/main.js',
         format: 'iife',
         name: 'library',
-        sourcemap: "inline"
+        sourcemap: true
     });
 })
 
 gulp.task('sass', function () {
     return gulp.src('src/sass/**/*.scss')
       .pipe(sass().on('error', sass.logError))
-      .pipe(gulp.dest('dist/css'));
+      .pipe(gulp.dest('public/css'));
   });
 
+gulp.task("copyIndex", function () {
+    return gulp.src('src/index.html')
+        .pipe(gulp.dest('public'))
+})
 
-gulp.task("default", ["compileTs", "sass"], function () {
+
+gulp.task("default", ["compileTs", "sass", "copyIndex"], function () {
     gulp.watch("src/script/**/*.ts", ["compileTs"])
     gulp.watch('src/sass/**/*.scss', ['sass']);
+    gulp.watch('src/index.html', ['copyIndex']);
     
     
     
-    gulp.watch(["dist/**/*", "index.html"]).on("change", browserSync.reload)
+    gulp.watch(["public/**/*", "index.html"]).on("change", browserSync.reload)
     browserSync.init({
-        proxy: "localhost:3000"
+        proxy: "localhost:3000",
+        open: false
     });
 });
